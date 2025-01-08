@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+
+  <h2 class="text-primary"><strong>Title:</strong>
+    <%= @post.title %></h2>
+<h4 class="text-secondary">Posted by <%=link_to @post.user.name , user_path(@post.user) %></h4>
+  <h6><%=pluralize(@post.views,"view") %></h6>
+
+
+<h6 class="text-primary-50" >
+  <%= @post.body %>
+</h6>
+<div class="m-4">
+  <%= link_to 'Edit', edit_post_path(@post), class: "btn btn-success" %> |
+  <%= link_to 'Back', posts_path,class: "btn btn-danger text-white" %>
+
+</div>
+<div class="container">
+  <%#= render 'comments/form', post: @post%>
+  <%# @comments.each do |comment| %>
+    <%#= render 'comments/comment', post: @post, comment: comment %>
+  <%# end %>
+  <%= form_with(model: [@post, @post.comments.build]) do |f| %>
+    <div class = "">
+      <%= f.text_area :body,placeholder: "Comment here..." , class: "form-control" %>
+      <%= f.submit "Reply", class: "btn btn-primary mt-1" %>
+    </div>
+  <% end %>
+  <% @comments.each do |comment| %>
+    <div class="comment-<%= comment.id %> container"
+         style="border: 1px solid black; padding: 1em; margin: 1em;">
+      <%= comment.user.email %><br />
+      <span>Posted <%= time_ago_in_words(comment.created_at) %></span>
+      <% if current_user == comment.user %>
+        <div class="button-group float-end">
+          <%= button_to "Delete", [@post, comment], class:"btn btn-danger", method: :delete %>
+        </div>
+      <% end %>
+      <hr />
+      <%= comment.body %>
+    </div>
+  <%end %>
+</div>

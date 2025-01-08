@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+<p style="color: green"><%= notice %></p>
+
+<%if @posts.present? %>
+<h1>Posts</h1>
+
+<table class="table  table-bordered">
+  <thead>
+    <tr>
+      <th class="text-center text-secondary">Title</th>
+      <th class="text-center text-secondary">Body</th>
+      <th colspan="3" class="text-center text-secondary">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.body %></td>
+        <td><%= link_to 'Show', post ,class: "btn btn-success" %></td>
+        <td><%= link_to 'Edit', edit_post_path(post),class: "btn  btn-primary" %></td>
+        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-danger" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+  <%else %>
+   <h2 class="text-danger">No post available</h2>
+  <%end %>
+
+<button class="btn btn-primary mt-2">
+  &plus;&nbsp;
+  <%= link_to 'New Post', new_post_path , class: "text-white" %>
+
+</button>
