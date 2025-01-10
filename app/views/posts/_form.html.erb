@@ -10,23 +10,26 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
+<div class="container border rounded m-4 p-4">
+  <div class="field  ">
     <%= form.label :title %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title ,class: "form-control"%>
   </div>
 
   <div class="field">
     <%= form.label :body %>
-    <%= form.text_area :body %>
+    <%= form.text_area :body ,class: "form-control"%>
   </div>
 
   <div class="actions ">
-  <%if @post.id.present? %>
+    <%if @post.id.present? %>
       <%= form.submit "Edit Post" , class: "btn btn-success" %>
-<%else %>
+    <%else %>
       <%= form.submit "New Post" , class: "btn btn-success" %>
 
-  <% end %>
+    <% end %>
   </div>
+
+</div>
+
 <% end %>

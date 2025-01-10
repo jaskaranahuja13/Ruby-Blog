@@ -11,7 +11,9 @@
   <%= @post.body %>
 </h6>
 <div class="m-4">
+  <%if current_user == @post.user  %>
   <%= link_to 'Edit', edit_post_path(@post), class: "btn btn-success" %> |
+    <%end %>
   <%= link_to 'Back', posts_path,class: "btn btn-danger text-white" %>
 
 </div>
