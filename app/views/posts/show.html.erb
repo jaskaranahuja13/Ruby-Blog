@@ -5,11 +5,31 @@
     <%= @post.title %></h2>
 <h4 class="text-secondary">Posted by <%=link_to @post.user.name , user_path(@post.user) %></h4>
   <h6><%=pluralize(@post.views,"view") %></h6>
+  <span>Posted <%= time_ago_in_words(@post.created_at) %></span>
 
 
-<h6 class="text-primary-50" >
+<h6 class="text-primary-50 container h bg-light p-1 m-1" >
   <%= @post.body %>
 </h6>
+
+
+<span class='parent-likes'>
+
+<a>
+  <% if current_user.liked? @post %>
+    <div> <%= button_to like_post_path(@post, 'unlike'), class: "btn btn-info", method: :put, remote: :true do %> &#128077; </div>
+
+      <% end %>
+  <% else %>
+    <div class="text-info"> <%= button_to like_post_path(@post, 'like'), class: "btn btn-active", method: :put, remote: :true do %> &#128077; </div>
+      <% end %>
+      <%end %>
+
+</a>
+  <span class="like_count" <%=@post.id%>'>
+  Likes <%= @post.get_likes.size %>  </span>
+</span>
+
 <div class="m-4">
   <%if current_user == @post.user  %>
   <%= link_to 'Edit', edit_post_path(@post), class: "btn btn-success" %> |
@@ -28,6 +48,7 @@
       <%= f.submit "Reply", class: "btn btn-primary mt-1" %>
     </div>
   <% end %>
+
   <% @comments.each do |comment| %>
     <div class="comment-<%= comment.id %> container"
          style="border: 1px solid black; padding: 1em; margin: 1em;">

@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy like]
   before_action :authenticate_user!, except: %i[show index]
-
+  respond_to :js , :html , :json
   # GET /posts or /posts.json
   def index
     @posts = Post.all.order(created_at: :desc)
@@ -21,6 +21,15 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+  end
+
+  def like
+    if params[:format] == 'like'
+      @post.liked_by current_user
+    elsif params[:format]== 'unlike'
+      @post.unliked_by current_user
+    end
+    redirect_to post_path
   end
 
   # POST /posts or /posts.json
