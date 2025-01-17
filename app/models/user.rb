@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   acts_as_voter
+  has_many :replies , dependent:  :destroy
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -10,7 +11,7 @@ class User < ApplicationRecord
 
   # Virtual attribute for authenticating by either username or email
   attr_accessor :login
-
+  
   before_save :downcase_fields
 
   def downcase_fields
@@ -28,7 +29,6 @@ class User < ApplicationRecord
   end
 
 end
-
 
 
 

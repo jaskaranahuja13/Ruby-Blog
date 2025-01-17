@@ -4,29 +4,29 @@
   <h2 class="text-primary"><strong>Title:</strong>
     <%= @post.title %></h2>
 <h4 class="text-secondary">Posted by <%=link_to @post.user.name , user_path(@post.user) %></h4>
-  <h6><%=pluralize(@post.views,"view") %></h6>
+<!--  <h6><%#=pluralize(@post.views,"view") %></h6>-->
   <span>Posted <%= time_ago_in_words(@post.created_at) %></span>
 
 
-<h6 class="text-primary-50 container h bg-light p-1 m-1" >
+<p rows="6" class="text-primary-50 container h bg-light p-1 m-1" >
   <%= @post.body %>
-</h6>
+</p>
 
 
 <span class='parent-likes'>
 
 <a>
   <% if current_user.liked? @post %>
-    <div> <%= button_to like_post_path(@post, 'unlike'), class: "btn btn-info", method: :put, remote: :true do %> &#128077; </div>
+    <div> <%= button_to like_post_path(@post, 'unlike'), class: "btn btn-outline-info", method: :put, remote: :true do %> &#128077; </div>
 
       <% end %>
   <% else %>
-    <div class="text-info"> <%= button_to like_post_path(@post, 'like'), class: "btn btn-active", method: :put, remote: :true do %> &#128077; </div>
+    <div class="text-info"> <%= button_to like_post_path(@post, 'like'), class: "btn btn-outline-secondary", method: :put, remote: :true do %> &#128077; </div>
       <% end %>
       <%end %>
 
 </a>
-  <span class="like_count" <%=@post.id%>'>
+  <span class="like_count text-primary" <%=@post.id%>'>
   Likes <%= @post.get_likes.size %>  </span>
 </span>
 
@@ -37,30 +37,70 @@
   <%= link_to 'Back', posts_path,class: "btn btn-danger text-white" %>
 
 </div>
-<div class="container">
-  <%#= render 'comments/form', post: @post%>
-  <%# @comments.each do |comment| %>
-    <%#= render 'comments/comment', post: @post, comment: comment %>
-  <%# end %>
-  <%= form_with(model: [@post, @post.comments.build]) do |f| %>
-    <div class = "">
-      <%= f.text_area :body,placeholder: "Comment here..." , class: "form-control" %>
-      <%= f.submit "Reply", class: "btn btn-primary mt-1" %>
-    </div>
-  <% end %>
 
-  <% @comments.each do |comment| %>
-    <div class="comment-<%= comment.id %> container"
-         style="border: 1px solid black; padding: 1em; margin: 1em;">
-      <%= comment.user.email %><br />
-      <span>Posted <%= time_ago_in_words(comment.created_at) %></span>
-      <% if current_user == comment.user %>
-        <div class="button-group float-end">
-          <%= button_to "Delete", [@post, comment], class:"btn btn-danger", method: :delete %>
-        </div>
-      <% end %>
-      <hr />
-      <%= comment.body %>
-    </div>
-  <%end %>
+<!--<div class="card my-1">-->
+<!--  <div class="card-body">-->
+<!--    <p class="font-weight-bold">Comments</p>-->
+    <%#= form_with(model: [@post, @post.comments.build]) do |f| %>
+<!--      <div class="form-group">-->
+        <%#= f.label 'New comment' %>
+        <%#= f.text_area :body, class: 'form-control' %>
+<!--      </div>-->
+      <%#= f.submit 'Submit', class: 'btn btn-primary' %>
+    <%# end %>
+<!--  </div>-->
+<!--</div>-->
+<%#= render @post.comments %>
+
+
+
+<div class="container">
+  <%= render 'comments/form', post: @post%>
+  <%# @comments.each do |comment| %>
+  </div>
+<div class="container">
+  <%= render 'comments/comment', post: @post, comment: @post.comments,class: "" %>
+
 </div>
+
+  <%# end %>
+  <%#= form_with(model: [@post, @post.comments.build]) do |f| %>
+<!--    <div class = "">-->
+      <%#= f.text_area :body,placeholder: "Comment here..." , class: "form-control" %>
+      <%#= f.submit "Reply", class: "btn btn-primary mt-1" %>
+<!--    </div>-->
+  <%# end %>
+
+  <%# @comments.each do |comment| %>
+    <%#unless comment.parent_id.present? %>
+<!--    <div class="comment-<%#= comment.id %> container"-->
+<!--         style="border: 1px solid black; padding: 1em; margin: 1em;">-->
+<!--      <%#= comment.user.email %><br />-->
+<!--      <span>Posted <%#= time_ago_in_words(comment.created_at) %></span>-->
+      <%# if current_user == comment.user %>
+<!--        <div class="button-group float-end">-->
+          <%#= button_to "Delete", [@post, comment], class:"btn btn-danger", method: :delete %>
+<!--        </div>-->
+      <%# end %>
+<!--      <hr />-->
+      <%#= comment.body %>
+      <%# comment.comments.each do |commentss| %>
+<!--          <div class="comment-<%#= commentss.id %> container"-->
+<!--               style="border: 1px solid black; padding: 1em; margin: 1em;">-->
+<!--            <%#= commentss.user.email %><br />-->
+<!--            <span>Posted <%#= time_ago_in_words(commentss.created_at) %></span>-->
+            <%# if current_user == commentss.user %>
+<!--              <div class="button-group float-end">-->
+                <%#= button_to "Delete", [@post, commentss], class:"btn btn-danger", method: :delete %>
+<!--              </div>-->
+            <%# end %>
+<!--            <hr />-->
+            <%#= commentss.body %>
+
+<!--          </div>-->
+      <%#end %>
+<!--    </div>-->
+<!--    </div>-->
+      <%#end %>
+  <%#end %>
+<!--</div>-->

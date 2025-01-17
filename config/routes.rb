@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :replies
   get 'users/profile'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -7,7 +8,9 @@ Rails.application.routes.draw do
   }
   get 'u/:id', to: 'users#profile', as: 'user'
   resources :posts do
-    resources :comments
+    resources :comments do
+      resources :replies, only: [:new, :create, :destroy]
+    end
   end
   resources :posts do
     member do

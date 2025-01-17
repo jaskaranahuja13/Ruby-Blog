@@ -1,0 +1,12 @@
+
+<h3>Reply to Comment</h3>
+
+<%= form_with(model: [@post, @comment, @reply]) do |f| %>
+  <div class="form-group">
+    <%= f.label :body, 'Write a reply to :'  %>
+    <%= f.text_area :body, class: 'form-control' %>
+  </div>
+  <%= f.submit 'Submit', class: 'btn btn-primary mt-2' %>
+  <%= link_to 'Cancel', post_path(@post), class: 'btn btn-secondary mt-2' %>
+<% end %>
+

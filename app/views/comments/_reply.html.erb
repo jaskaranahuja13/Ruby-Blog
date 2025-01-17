@@ -1,0 +1,8 @@
+<div class="card ml-5">
+  <div class="card-body">
+    <strong> <%= reply.user.email %></strong> <br>
+    <%= time_ago_in_words(reply.created_at) %><br>
+
+    <%= reply.body %>
+  </div>
+</div>

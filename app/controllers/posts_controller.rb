@@ -11,9 +11,10 @@ class PostsController < ApplicationController
   def show
     @post.update(views: @post.views + 1)
     @comments = @post.comments.order(created_at: :desc)
+    # @comment = @post.comments.find(params[:comment_id])
+    # @reply = @comment.replies.find(param[:reply_id])
 
   end
-
   # GET /posts/new
   def new
     @post = Post.new
@@ -31,7 +32,6 @@ class PostsController < ApplicationController
     end
     redirect_to post_path
   end
-
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)

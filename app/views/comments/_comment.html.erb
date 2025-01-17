@@ -1,13 +1,73 @@
-<div class="comment-<%= comment.id %> container"
-     style="border: 1px solid black; padding: 1em; margin: 1em;">
-  <%= comment.user.email %><br />
-  <span>Posted <%= time_ago_in_words(comment.created_at) %></span>
-<%=comment.body %>
-  <% if current_user == comment.user %>
-    <div class="button-group float-end">
-      <%= button_to "Delete", [post, comment], class:"btn btn-danger", method: :delete %>
-    </div>
-  <% end %>
-  <hr />
-  <%= comment.body %>
+<% @comments.each do |comment| %>
+    <div class="comment-<%= comment.id %> container"
+         style="border: 1px solid black; padding: 1em; margin: 1em;">
+      <%= comment.user.name %><br />
+      <span>Posted <%= time_ago_in_words(comment.created_at) %></span>
+      <% if current_user == comment.user %>
+        <div class="button-group float-end">
+          <%= button_to "Delete", [@post, comment], class:"btn btn-danger", method: :delete %>
+        </div>
+      <% end %>
+      <hr />
+      <%= comment.body %>
+      <%= link_to 'Reply', new_post_comment_reply_path(@post, comment), class: 'btn btn-link '%>
+
+      <!--      <button onclick="myFunction()">Click Me</button>-->
+
+<!--      <div id="myDiv">-->
+<!--  <render 'formreply',post :post></render>-->
 </div>
+      <% if comment.replies.any? %>
+        <div class="ml-4 mt-3">
+          <h5>Replies:</h5>
+          <% comment.replies.each do |reply| %>
+            <div class="card mt-2">
+              <div class="card-body">
+                <%= reply.user.name %><br />
+                <%#= button_to "Delete", reply, class:"btn btn-danger", method: :delete %>
+
+                <span>Posted <%= time_ago_in_words(reply.created_at) %></span>
+                <hr />
+
+
+                <p><%= reply.body %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+
+<%end %>
+<%# unless comment.parent_id || !comment.persisted? %>
+<!--  <div class="card m-1 p-1">-->
+<!--    <div class="card-body m-1 p-1">-->
+<!--    <strong> <%#= comment.user.email %></strong> <br>-->
+<!--      <%#= time_ago_in_words(comment.created_at) %><br>-->
+      <%#= comment.body %>
+
+      <%#= button_to 'reply', new_post_comment_path(@post, parent_id: comment.id), remote: true, class: 'd-block btn btn-info' %>
+<!--    </div>-->
+
+<!--  </div>-->
+  <%# if comment.replies.any? %>
+    <%# comment.replies.each do |reply| %>
+
+      <%#= render partial: 'comments/reply', locals: { reply: reply } %>
+    <%# end %>
+  <%# end %>
+<!--  <div id="reply-form-<%#= comment.id %>"></div>-->
+<%# end %>
+
+<!--<script>-->
+<!--    function myFunction() {-->
+<!--        var x = document.getElementById("myDiv");-->
+<!--        if (x.style.display === "none") {-->
+<!--            x.style.display = "block";-->
+<!--        } else {-->
+<!--            x.style.display = "none";-->
+<!--        }-->
+<!--    }-->
+
+<!--</script>-->

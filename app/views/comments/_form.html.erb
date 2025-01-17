@@ -1,6 +1,6 @@
-<%= form_with(model: [post, post.comments.build]) do |f| %>
-  <div class = "form-control">
-    <%= f.rich_text_area :body %>
+<%= form_with(model: [@post, @post.comments.build]) do |f| %>
+  <div class = "">
+    <%= f.text_area :body,placeholder: "Comment here..." , class: "form-control"%>
     <%= f.submit "Reply", class: "btn btn-primary mt-1" %>
   </div>
 <% end %>
